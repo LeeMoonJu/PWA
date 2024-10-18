@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="/vite/public/favicon.ico" />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="180x180"
+      href="/vite/public/logo192.png"
+      type="image/png"
+    />
+    <!-- Meta Tags-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2296f3" />
+    <meta name="title" content="Quve Study Project" />
+    <meta
+      name="description"
+      content="Start your next React project with Berry admin template. It build with Reactjs, Material-UI, Redux, and Hook for faster web development."
+    />
+    <meta
+      name="keywords"
+      content="react admin template, material-ui react dashboard template, reactjs admin template, reactjs dashboard, react backend template"
+    />
+    <meta name="author" content="CodedThemes" />
+
+    <title>Quve Study Project</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+          This HTML file is a template.
+          If you open it directly in the browser, you will see an empty page.
+
+          You can add webfonts, meta tags, or analytics to this file.
+          The build step will place the bundled scripts into the <body> tag.
+
+          To begin the development, run `npm start` or `yarn start`.
+          To create a production bundle, use `npm run build` or `yarn build`.
+        -->
+    <script type="module" src="/src/index.jsx"></script>
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        // Register a service worker hosted at the root of the
+        // site using the default scope.
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then((registration) => {
+            console.log("Service worker registration succeeded:", registration);
+          })
+          .catch((err) => {
+            console.log("Service worker registration failed:", error);
+          });
+      } else {
+        console.log("Service workers are not supported.");
+      }
+    </script>
+  </body>
+</html>
