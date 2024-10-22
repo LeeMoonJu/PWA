@@ -6,16 +6,13 @@ const icons = {
     IconKey
 };
 
-// ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
-
-const pages = {
-    id: 'pages',
-    title: 'Pages',
-    caption: 'Pages Caption',
+const mjpages = {
+    id: 'mjpages',
+    title: 'MJ Pages',
     type: 'group',
     children: [
         {
-            id: 'authentication',
+            id: 'login',
             title: 'Authentication',
             type: 'collapse',
             icon: icons.IconKey,
@@ -37,4 +34,4 @@ const pages = {
     ]
 };
 
-export default pages;
+export default mjpages;
