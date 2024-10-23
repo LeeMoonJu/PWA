@@ -1,24 +1,27 @@
 // assets
-import { IconKey } from '@tabler/icons-react';
+import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp } from '@tabler/icons-react';
 
 // constant
 const icons = {
-    IconKey
+    IconArrowDown,
+    IconArrowUp,
+    IconArrowLeft,
+    IconArrowRight
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const pages = {
-    id: 'pages',
-    title: 'Pages',
-    caption: 'Pages Caption',
+    id: 'personal',
+    title: 'Personal',
+    caption: 'Personal Component',
     type: 'group',
     children: [
         {
-            id: 'authentication',
-            title: 'Authentication',
+            id: 'moonju',
+            title: 'Moonju',
             type: 'collapse',
-            icon: icons.IconKey,
+            icon: icons.IconArrowDown,
             children: [
                 {
                     id: 'login3',
@@ -31,6 +34,48 @@ const pages = {
                     title: 'Register',
                     type: 'item',
                     url: '/pages/register/register3'
+                }
+            ]
+        },
+        {
+            id: 'wonjae',
+            title: 'Wonjae',
+            type: 'collapse',
+            icon: icons.IconArrowUp,
+            children: [
+                {
+                    id: 'login3',
+                    title: 'Login',
+                    type: 'item',
+                    url: '/pages/login/login3'
+                }
+            ]
+        },
+        {
+            id: 'donggun',
+            title: 'Donggun',
+            type: 'collapse',
+            icon: icons.IconArrowLeft,
+            children: [
+                {
+                    id: 'login3',
+                    title: 'Login',
+                    type: 'item',
+                    url: '/pages/login/login3'
+                }
+            ]
+        },
+        {
+            id: 'gyurim',
+            title: 'Gyurim',
+            type: 'collapse',
+            icon: icons.IconArrowRight,
+            children: [
+                {
+                    id: 'login3',
+                    title: 'Login',
+                    type: 'item',
+                    url: '/pages/login/login3'
                 }
             ]
         }
