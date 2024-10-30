@@ -1,8 +1,9 @@
 // assets
-import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp } from '@tabler/icons-react';
+import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp, IconActivity } from '@tabler/icons-react';
 
 // constant
 const icons = {
+    IconActivity,
     IconArrowDown,
     IconArrowUp,
     IconArrowLeft,
@@ -21,13 +22,13 @@ const pages = {
             id: 'moonju',
             title: 'Moonju',
             type: 'collapse',
-            icon: icons.IconArrowDown,
+            icon: icons.IconActivity,
             children: [
                 {
                     id: 'login3',
                     title: 'Login',
                     type: 'item',
-                    url: '/pages/login/login3'
+                    url: '/'
                 },
                 {
                     id: 'register3',
@@ -47,7 +48,7 @@ const pages = {
                     id: 'login3',
                     title: 'Login',
                     type: 'item',
-                    url: '/pages/login/login3'
+                    url: '/'
                 }
             ]
         },
@@ -61,7 +62,7 @@ const pages = {
                     id: 'login3',
                     title: 'Login',
                     type: 'item',
-                    url: '/pages/login/login3'
+                    url: '/'
                 }
             ]
         },
@@ -75,7 +76,7 @@ const pages = {
                     id: 'login3',
                     title: 'Login',
                     type: 'item',
-                    url: '/pages/login/login3'
+                    url: '/'
                 }
             ]
         }

@@ -27,17 +27,25 @@ import '@fontsource/poppins/700.css';
 // style + assets
 import 'assets/scss/style.scss';
 import reportWebVitals from 'reportWebVitals';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 const store = configureStore({ reducer });
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+    <Provider store={store}>
+        <GoogleOAuthProvider
+            clientId={clientId}
+            onScriptLoadSuccess={() => console.log('GoogleOAuth Load Success')}
+            onScriptLoadError={() => console.log('GoogleOAuth Load Failed')}
+        >
+            <App />
+        </GoogleOAuthProvider>
+    </Provider>
 );
 
 // If you want your app to work offline and load faster, you can change

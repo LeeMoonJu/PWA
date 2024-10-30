@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -30,20 +29,15 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Google from 'assets/images/icons/social-google.svg';
 import { useNavigate } from 'react-router-dom';
+import GoogleAuthLogin from './GoogleAuthLogin';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = ({ ...others }) => {
     const theme = useTheme();
-    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const customization = useSelector((state) => state.customization);
     const [checked, setChecked] = useState(true);
-
-    const googleHandler = async () => {
-        console.error('Login');
-    };
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -61,11 +55,12 @@ const AuthLogin = ({ ...others }) => {
     ];
 
     const navigate = useNavigate();
-    const checkLogin = async (data) => {
+    const checkLogin = (data) => {
         // TODO: 로그인 Api?
-        const user = await users.find((x) => x.id === data.email);
+        const user = users.find((x) => x.id === data.email && x.pwd === data.password);
 
         if (user) {
+            localStorage.setItem('userId', data.email);
             navigate('/dashboard/default');
         }
     };
@@ -74,25 +69,7 @@ const AuthLogin = ({ ...others }) => {
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
                 <Grid item xs={12}>
-                    <AnimateButton>
-                        <Button
-                            disableElevation
-                            fullWidth
-                            onClick={googleHandler}
-                            size="large"
-                            variant="outlined"
-                            sx={{
-                                color: 'grey.700',
-                                backgroundColor: theme.palette.grey[50],
-                                borderColor: theme.palette.grey[100]
-                            }}
-                        >
-                            <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
-                            </Box>
-                            Sign in with Google
-                        </Button>
-                    </AnimateButton>
+                    <GoogleAuthLogin />
                 </Grid>
                 <Grid item xs={12}>
                     <Box
@@ -140,7 +117,6 @@ const AuthLogin = ({ ...others }) => {
                 // Form 제출시 실행함수
                 onSubmit={(data, { setSubmitting }) => {
                     setSubmitting(true);
-
                     checkLogin(data);
                     setSubmitting(false);
                 }}
