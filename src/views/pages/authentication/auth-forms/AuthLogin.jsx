@@ -37,7 +37,7 @@ import GoogleAuthLogin from './GoogleAuthLogin';
 const AuthLogin = ({ ...others }) => {
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(localStorage.getItem('rememberChecked') || false);
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -47,6 +47,8 @@ const AuthLogin = ({ ...others }) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+    const initialEmail = localStorage.getItem('userEmail') || '';
 
     const users = [
         { id: 'moonju@quve.kr', pwd: '1234' },
@@ -59,8 +61,15 @@ const AuthLogin = ({ ...others }) => {
         // TODO: 로그인 Api?
         const user = users.find((x) => x.id === data.email && x.pwd === data.password);
 
+        if (checked) {
+            localStorage.setItem('rememberChecked', true);
+            localStorage.setItem('userEmail', data.email);
+        } else {
+            localStorage.removeItem('rememberChecked');
+            localStorage.removeItem('userEmail');
+        }
+
         if (user) {
-            localStorage.setItem('userId', data.email);
             navigate('/dashboard/default');
         }
     };
@@ -111,7 +120,7 @@ const AuthLogin = ({ ...others }) => {
             <Formik
                 // 초기상태
                 initialValues={{
-                    email: '',
+                    email: initialEmail,
                     password: ''
                 }}
                 // Form 제출시 실행함수
