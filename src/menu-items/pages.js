@@ -29,12 +29,6 @@ const pages = {
                     title: 'Login',
                     type: 'item',
                     url: '/'
-                },
-                {
-                    id: 'register3',
-                    title: 'Register',
-                    type: 'item',
-                    url: '/pages/register/register3'
                 }
             ]
         },
