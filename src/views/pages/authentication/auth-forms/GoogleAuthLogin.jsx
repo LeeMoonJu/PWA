@@ -18,7 +18,7 @@ const GoogleAuthLogin = () => {
              *  서버에 response.access_token 전달하여 서버에서 Google Api로 회원정보 요청..
              *  서버에서 회원정보 요청 성공 시, 프론트로 회원정보 확인 후 전달 > 로그인 처리
              */
-            localStorage.setItem('userId', 'Social User');
+            localStorage.setItem('user', JSON.stringify({ id: 'Social@email.com', name: 'Slave Social User' }));
             navigate('/dashboard/default');
         },
         onError: (error) => {

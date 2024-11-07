@@ -48,25 +48,27 @@ const AuthLogin = ({ ...others }) => {
         event.preventDefault();
     };
 
-    const initialEmail = localStorage.getItem('userEmail') || '';
+    const initialEmail = JSON.parse(localStorage.getItem('user'))?.id || '';
 
     const users = [
-        { id: 'moonju@quve.kr', pwd: '1234' },
-        { id: 'no@quve.kr', pwd: '1234' },
-        { id: 'dk@quve.kr', pwd: '1234' }
+        { id: 'moonju@quve.kr', name: '문주' },
+        { id: 'nodnjs1231@quve.kr', name: '원재' },
+        { id: 'kyurim8535@quve.kr', name: '규림' },
+        { id: 'yundg@quve.kr', name: '동건' },
+        { id: 'pyd6119@quve.kr', name: '영도' }
     ];
 
     const navigate = useNavigate();
     const checkLogin = (data) => {
         // TODO: 로그인 Api?
-        const user = users.find((x) => x.id === data.email && x.pwd === data.password);
+        const user = users.find((x) => x.id === data.email);
 
         if (checked) {
             localStorage.setItem('rememberChecked', true);
-            localStorage.setItem('userEmail', data.email);
+            localStorage.setItem('user', JSON.stringify(user));
         } else {
             localStorage.removeItem('rememberChecked');
-            localStorage.removeItem('userEmail');
+            localStorage.removeItem('user');
         }
 
         if (user) {

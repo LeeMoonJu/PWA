@@ -3,12 +3,14 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import MusicPlayer from 'views/utilities/MusicPlayer';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
 
+const Components = Loadable(lazy(() => import('views/pages/components')));
+
 // utilities routing
-const UtilsBluetooth = Loadable(lazy(() => import('views/utilities/Bluetooth')));
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
@@ -34,6 +36,15 @@ const MainRoutes = {
             ]
         },
         {
+            path: 'moonju',
+            children: [
+                {
+                    path: 'music-player',
+                    element: <MusicPlayer />
+                }
+            ]
+        },
+        {
             path: 'utils',
             children: [
                 {
@@ -47,12 +58,12 @@ const MainRoutes = {
                 {
                     path: 'util-shadow',
                     element: <UtilsShadow />
-                },
-                {
-                    path: 'bluetooth',
-                    element: <UtilsBluetooth />
                 }
             ]
+        },
+        {
+            path: 'pages/components',
+            element: <Components />
         },
         {
             path: 'sample-page',

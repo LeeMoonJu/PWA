@@ -49,13 +49,14 @@ const ProfileSection = () => {
   const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
-    const userId = localStorage.getItem('userId');
+  const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
   /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
   const anchorRef = useRef(null);
   const handleLogout = async () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
     navigate('/');
   };
 
@@ -159,10 +160,10 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Hi,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          {userId}
+                          {user.name}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Project Admin</Typography>
+                      <Typography variant="subtitle2">{user.id}</Typography>
                     </Stack>
                     <OutlinedInput
                       sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}

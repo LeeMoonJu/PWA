@@ -25,10 +25,22 @@ const pages = {
             icon: icons.IconActivity,
             children: [
                 {
-                    id: 'login3',
+                    id: 'login',
                     title: 'Login',
                     type: 'item',
                     url: '/'
+                },
+                {
+                    id: 'register',
+                    title: 'Register',
+                    type: 'item',
+                    url: '/register'
+                },
+                {
+                    id: 'musicPlayer',
+                    title: 'Music Player',
+                    type: 'item',
+                    url: '/moonju/music-player'
                 }
             ]
         },
@@ -37,42 +49,21 @@ const pages = {
             title: 'Wonjae',
             type: 'collapse',
             icon: icons.IconArrowUp,
-            children: [
-                {
-                    id: 'login3',
-                    title: 'Login',
-                    type: 'item',
-                    url: '/'
-                }
-            ]
+            children: [{}]
         },
         {
             id: 'donggun',
             title: 'Donggun',
             type: 'collapse',
             icon: icons.IconArrowLeft,
-            children: [
-                {
-                    id: 'login3',
-                    title: 'Login',
-                    type: 'item',
-                    url: '/'
-                }
-            ]
+            children: [{}]
         },
         {
             id: 'gyurim',
             title: 'Gyurim',
             type: 'collapse',
             icon: icons.IconArrowRight,
-            children: [
-                {
-                    id: 'login3',
-                    title: 'Login',
-                    type: 'item',
-                    url: '/'
-                }
-            ]
+            children: [{}]
         }
     ]
 };

@@ -1,5 +1,5 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill, IconBluetooth } from '@tabler/icons-react';
+import { IconTypography, IconPalette, IconShadow, IconWindmill, IconComponents } from '@tabler/icons-react';
 
 // constant
 const icons = {
@@ -7,7 +7,7 @@ const icons = {
     IconPalette,
     IconShadow,
     IconWindmill,
-    IconBluetooth
+    IconComponents
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -18,11 +18,11 @@ const utilities = {
     type: 'group',
     children: [
         {
-            id: 'bluetooth',
-            title: 'Bluetooth',
+            id: 'components',
+            title: 'Components',
             type: 'item',
-            url: '/utils/bluetooth',
-            icon: icons.IconBluetooth,
+            url: '/pages/components',
+            icon: icons.IconComponents,
             breadcrumbs: false
         },
         {

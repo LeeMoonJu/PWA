@@ -170,12 +170,12 @@ const MusicPlayer = () => {
                 <IconButton onClick={toggleDrawer} sx={{ mr: 2 }}>
                     <QueueMusicIcon />
                 </IconButton>
-                
+
                 <Stack direction="row" spacing={2} sx={{ flex: 1, alignItems: 'center' }}>
-                    <Paper 
-                        elevation={2} 
-                        sx={{ 
-                            p: 1.5, 
+                    <Paper
+                        elevation={2}
+                        sx={{
+                            p: 1.5,
                             borderRadius: 2,
                             backgroundColor: 'primary.light',
                             display: 'flex',
@@ -187,11 +187,11 @@ const MusicPlayer = () => {
                     >
                         <AlbumIcon sx={{ fontSize: 40, color: 'primary.main' }} />
                     </Paper>
-                    
+
                     <Stack spacing={0.5} sx={{ flex: 1, overflow: 'hidden' }}>
-                        <Typography 
-                            variant="h6" 
-                            sx={{ 
+                        <Typography
+                            variant="h6"
+                            sx={{
                                 fontWeight: 600,
                                 whiteSpace: 'nowrap',
                                 overflow: 'hidden',
@@ -200,8 +200,8 @@ const MusicPlayer = () => {
                         >
                             {currentSong.title}
                         </Typography>
-                        <Typography 
-                            variant="subtitle2" 
+                        <Typography
+                            variant="subtitle2"
                             color="text.secondary"
                             sx={{
                                 whiteSpace: 'nowrap',
@@ -215,32 +215,22 @@ const MusicPlayer = () => {
                 </Stack>
             </Box>
 
-            <Box sx={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                gap: 2, 
-                mb: 2,
-                mt: 1
-            }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mb: 2, mt: 1 }}>
                 <IconButton onClick={handlePrevious}>
                     <SkipPreviousIcon />
                 </IconButton>
-                <IconButton 
-                    onClick={handlePlayPause} 
-                    sx={{ 
-                        p: 2, 
+                <IconButton
+                    onClick={handlePlayPause}
+                    sx={{
+                        p: 2,
                         backgroundColor: 'primary.main',
                         '&:hover': {
-                            backgroundColor: 'primary.dark',
+                            backgroundColor: 'primary.dark'
                         },
                         color: 'white'
                     }}
                 >
-                    {isPlaying ? 
-                        <PauseIcon sx={{ fontSize: 38 }} /> : 
-                        <PlayArrowIcon sx={{ fontSize: 38 }} />
-                    }
+                    {isPlaying ? <PauseIcon sx={{ fontSize: 38 }} /> : <PlayArrowIcon sx={{ fontSize: 38 }} />}
                 </IconButton>
                 <IconButton onClick={handleNext}>
                     <SkipNextIcon />
@@ -259,7 +249,7 @@ const MusicPlayer = () => {
                             width: 12,
                             height: 12,
                             '&:hover, &.Mui-focusVisible': {
-                                boxShadow: 'none',
+                                boxShadow: 'none'
                             }
                         }
                     }}
@@ -274,23 +264,16 @@ const MusicPlayer = () => {
                 </Box>
             </Box>
 
-            <Stack 
-                direction="row" 
-                spacing={2} 
-                alignItems="center" 
-                sx={{ mt: 2 }}
-            >
-                <IconButton onClick={handleMuteToggle}>
-                    {getVolumeIcon()}
-                </IconButton>
-                <Slider 
-                    value={volume} 
-                    onChange={handleVolumeChange} 
-                    aria-labelledby="continuous-slider" 
-                    step={10} 
-                    marks 
-                    min={0} 
-                    max={100} 
+            <Stack direction="row" spacing={2} alignItems="center" sx={{ mt: 2 }}>
+                <IconButton onClick={handleMuteToggle}>{getVolumeIcon()}</IconButton>
+                <Slider
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    aria-labelledby="continuous-slider"
+                    step={10}
+                    marks
+                    min={0}
+                    max={100}
                 />
             </Stack>
 
@@ -308,14 +291,7 @@ const MusicPlayer = () => {
                 }}
             >
                 <Box sx={{ p: 2 }}>
-                    <Typography 
-                        variant="h6" 
-                        sx={{ 
-                            mb: 2, 
-                            fontWeight: 600,
-                            color: 'primary.main'
-                        }}
-                    >
+                    <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: 'primary.main' }}>
                         재생 목록
                     </Typography>
                     <Divider />
@@ -332,16 +308,13 @@ const MusicPlayer = () => {
                                     '&.Mui-selected': {
                                         backgroundColor: 'primary.lighter',
                                         '&:hover': {
-                                            backgroundColor: 'primary.light',
+                                            backgroundColor: 'primary.light'
                                         }
                                     }
                                 }}
                             >
                                 <ListItemIcon>
-                                    <MusicNoteIcon 
-                                        color={currentSongIndex === index ? "primary" : "inherit"}
-                                        sx={{ fontSize: 20 }}
-                                    />
+                                    <MusicNoteIcon color={currentSongIndex === index ? 'primary' : 'inherit'} sx={{ fontSize: 20 }} />
                                 </ListItemIcon>
                                 <ListItemText
                                     primary={song.title}
@@ -364,11 +337,7 @@ const MusicPlayer = () => {
                                         }
                                     }}
                                 />
-                                <Typography 
-                                    variant="caption" 
-                                    color="text.secondary"
-                                    sx={{ ml: 1 }}
-                                >
+                                <Typography variant="caption" color="text.secondary" sx={{ ml: 1 }}>
                                     {song.duration}
                                 </Typography>
                             </ListItem>
