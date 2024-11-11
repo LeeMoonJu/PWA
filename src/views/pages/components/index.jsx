@@ -23,13 +23,10 @@ const Components = () => {
                     </SubCard>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <SubCard title="Music Player">
+                    <SubCard title="Memory Game">
                         <Grid container direction="column" spacing={1}>
                             <Grid item>
-                                122
-                            </Grid>
-                            <Grid item>
-                                122
+                                
                             </Grid>
                         </Grid>
                     </SubCard>

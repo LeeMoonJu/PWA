@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import MusicPlayer from 'views/utilities/MusicPlayer';
+import PatternGame from 'components/PatternGame';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -64,6 +65,10 @@ const MainRoutes = {
         {
             path: 'pages/components',
             element: <Components />
+        },
+        {
+            path: 'pages/patternGame',
+            element: <PatternGame />
         },
         {
             path: 'sample-page',

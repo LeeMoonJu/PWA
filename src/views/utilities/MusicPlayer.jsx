@@ -18,34 +18,34 @@ import AlbumIcon from '@mui/icons-material/Album';
 
 const sampleSongs = [
     {
-        title: 'Creative Minds',
-        artist: 'Benjamin Tissot',
-        duration: '2:27',
-        audioUrl: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3'
+        title: 'Guitar',
+        artist: 'Sample Artist',
+        duration: '3:30',
+        audioUrl: 'https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg'
     },
     {
-        title: 'Summer',
-        artist: 'Benjamin Tissot',
-        duration: '3:01',
-        audioUrl: 'https://www.bensound.com/bensound-music/bensound-summer.mp3'
+        title: 'Piano',
+        artist: 'Sample Artist',
+        duration: '3:00',
+        audioUrl: 'https://actions.google.com/sounds/v1/alarms/mechanical_clock_ring.ogg'
     },
     {
-        title: 'Acoustic Breeze',
-        artist: 'Benjamin Tissot',
-        duration: '2:37',
-        audioUrl: 'https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3'
+        title: 'Beep',
+        artist: 'Sample Artist',
+        duration: '2:00',
+        audioUrl: 'https://actions.google.com/sounds/v1/alarms/beep_short.ogg'
     },
     {
-        title: 'Happy Rock',
-        artist: 'Benjamin Tissot',
-        duration: '1:45',
-        audioUrl: 'https://www.bensound.com/bensound-music/bensound-happyrock.mp3'
+        title: 'Alarm',
+        artist: 'Sample Artist',
+        duration: '2:30',
+        audioUrl: 'https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg'
     },
     {
-        title: 'Jazz Comedy',
-        artist: 'Benjamin Tissot',
-        duration: '2:13',
-        audioUrl: 'https://www.bensound.com/bensound-music/bensound-jazzcomedy.mp3'
+        title: 'Bell',
+        artist: 'Sample Artist',
+        duration: '1:30',
+        audioUrl: 'https://actions.google.com/sounds/v1/alarms/phone_alerts_and_rings.ogg'
     }
 ];
 
@@ -64,6 +64,14 @@ const MusicPlayer = () => {
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 
+    const handleNext = async () => {
+        const nextIndex = (currentSongIndex + 1) % sampleSongs.length;
+        console.log(currentSongIndex, sampleSongs.length, nextIndex);
+        setCurrentSongIndex(nextIndex);
+        setCurrentSong(sampleSongs[nextIndex]);
+        setIsPlaying(true);
+    };
+
     useEffect(() => {
         audio.src = currentSong.audioUrl;
         audio.load();
@@ -73,21 +81,24 @@ const MusicPlayer = () => {
     }, [currentSong]);
 
     useEffect(() => {
-        // 오디오 duration 업데이트
-        audio.addEventListener('loadedmetadata', () => {
+        const handleLoadedMetadata = () => {
             setDuration(audio.duration);
-        });
+        };
 
-        // 재생 시간 업데이트
-        audio.addEventListener('timeupdate', () => {
+        const handleTimeUpdate = () => {
             setCurrentTime(audio.currentTime);
-        });
+        };
+
+        audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+        audio.addEventListener('ended', handleNext);
 
         return () => {
-            audio.removeEventListener('loadedmetadata', () => {});
-            audio.removeEventListener('timeupdate', () => {});
+            audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+            audio.removeEventListener('timeupdate', handleTimeUpdate);
+            audio.removeEventListener('ended', handleNext);
         };
-    }, []);
+    }, [handleNext, audio]);
 
     const handlePlayPause = () => {
         if (isPlaying) {
@@ -124,13 +135,6 @@ const MusicPlayer = () => {
         if (isMuted || volume === 0) return <VolumeMuteIcon />;
         if (volume < 50) return <VolumeDownIcon />;
         return <VolumeUpIcon />;
-    };
-
-    const handleNext = async () => {
-        const nextIndex = (currentSongIndex + 1) % sampleSongs.length;
-        setCurrentSongIndex(nextIndex);
-        setCurrentSong(sampleSongs[nextIndex]);
-        setIsPlaying(true);
     };
 
     const handlePrevious = async () => {

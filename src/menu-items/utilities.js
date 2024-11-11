@@ -1,4 +1,5 @@
 // assets
+import { IconGridPattern } from '@tabler/icons-react';
 import { IconTypography, IconPalette, IconShadow, IconWindmill, IconComponents } from '@tabler/icons-react';
 
 // constant
@@ -7,7 +8,8 @@ const icons = {
     IconPalette,
     IconShadow,
     IconWindmill,
-    IconComponents
+    IconComponents,
+    IconGridPattern
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -23,6 +25,14 @@ const utilities = {
             type: 'item',
             url: '/pages/components',
             icon: icons.IconComponents,
+            breadcrumbs: false
+        },
+        {
+            id: 'patternGame',
+            title: 'Pattern Game',
+            type: 'item',
+            url: '/pages/patternGame',
+            icon: icons.IconGridPattern,
             breadcrumbs: false
         },
         {
