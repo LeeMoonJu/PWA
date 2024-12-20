@@ -41,6 +41,12 @@ const pages = {
                     title: 'Music Player',
                     type: 'item',
                     url: '/moonju/music-player'
+                },
+                {
+                    id: 'rpgGame',
+                    title: 'RPG Game',
+                    type: 'item',
+                    url: '/moonju/rpg-game'
                 }
             ]
         },
