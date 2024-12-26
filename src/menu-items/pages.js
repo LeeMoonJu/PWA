@@ -1,5 +1,5 @@
 // assets
-import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp, IconActivity } from '@tabler/icons-react';
+import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp, IconActivity, IconGoGame } from '@tabler/icons-react';
 
 // constant
 const icons = {
@@ -7,7 +7,8 @@ const icons = {
     IconArrowDown,
     IconArrowUp,
     IconArrowLeft,
-    IconArrowRight
+    IconArrowRight,
+    IconGoGame
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -18,6 +19,26 @@ const pages = {
     caption: 'Personal Component',
     type: 'group',
     children: [
+        {
+            id: 'game',
+            title: 'Game',
+            type: 'collapse',
+            icon: icons.IconGoGame,
+            children: [
+                {
+                    id: 'defenceGame',
+                    title: 'Defence Game',
+                    type: 'item',
+                    url: '/game/defence'
+                },
+                {
+                    id: 'RPGGame',
+                    title: 'RPG Game',
+                    type: 'item',
+                    url: '/game/rpg'
+                }
+            ]
+        },
         {
             id: 'moonju',
             title: 'Moonju',
@@ -41,12 +62,6 @@ const pages = {
                     title: 'Music Player',
                     type: 'item',
                     url: '/moonju/music-player'
-                },
-                {
-                    id: 'rpgGame',
-                    title: 'RPG Game',
-                    type: 'item',
-                    url: '/moonju/rpg-game'
                 }
             ]
         },

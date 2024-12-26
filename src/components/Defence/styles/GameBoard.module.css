@@ -1,0 +1,384 @@
+.gameBoard {
+    width: 800px;
+    height: 600px;
+    background-color: #4a9375;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.row {
+    display: flex;
+    gap: 4px;
+}
+
+.tile {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+/* 타워 설치 가능 구역 */
+.towerSlot {
+    background-color: #2d2d2d;
+    background-image: 
+        linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%), 
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.towerSlot:hover {
+    background-color: #98FB98;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+/* 적 이동 경로 */
+.path {
+    background-color: #4a3121;
+    background-image: 
+        repeating-linear-gradient(45deg, 
+            rgba(255, 255, 255, 0.1) 0, 
+            rgba(255, 255, 255, 0.1) 1px, 
+            transparent 1px, 
+            transparent 50%
+        );
+    background-size: 10px 10px;
+    border: 2px solid #654321;
+}
+
+/* 시작 지점 */
+.start {
+    background: linear-gradient(45deg, #4169E1, #1e90ff);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* 도착 지점 */
+.end {
+    background: linear-gradient(45deg, #DC143C, #ff4444);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* 타워 기본 스타일 */
+.tower {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.towerBase {
+    width: 80%;
+    height: 40%;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 10%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.towerTop {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    top: 10%;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.towerAccent {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+}
+
+/* 타워 타입별 특별 디자인 */
+.basic .towerTop {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.archer .towerTop {
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+}
+
+.magic .towerTop {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.cannon .towerTop {
+    height: 40%;
+    width: 70%;
+    border-radius: 10px;
+    transform: translateY(10px);
+}
+
+.cannon .towerBase {
+    height: 50%;
+}
+
+/* 타워 호버 효과 */
+.tower:hover .towerTop {
+    transform: scale(1.1) translateY(-2px);
+}
+
+.tower:hover .towerAccent {
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: brightness(1);
+    }
+    to {
+        filter: brightness(1.5);
+    }
+}
+
+/* 사정거리 표시 */
+.inRange {
+    position: relative;
+}
+
+.inRange::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 0, 0.2);
+    border-radius: 8px;
+    pointer-events: none;
+    animation: rangeGlow 1.5s infinite alternate;
+}
+
+/* 선택 타일 */
+.selected {
+    border: 2px solid #FFD700;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+/* 애니메이션 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes rangeGlow {
+    from {
+        background-color: rgba(255, 255, 0, 0.1);
+    }
+    to {
+        background-color: rgba(255, 255, 0, 0.3);
+    }
+}
+
+/* 설치 가능한 타일 표시 */
+.placeable {
+    background-color: rgba(144, 238, 144, 0.8) !important;
+    animation: placeableGlow 1.5s infinite alternate;
+}
+
+/* 타워 설치 애니메이션 */
+.placing {
+    animation: placeTower 0.5s ease-out;
+}
+
+@keyframes placeableGlow {
+    from {
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+    }
+}
+
+@keyframes placeTower {
+    0% {
+        transform: scale(0.3) translateY(-20px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 타워 호버 효과 수정 */
+.tower:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.monstersLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    padding: 10px;
+}
+
+.monster {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform-origin: center;
+}
+
+.monsterHp {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.monsterHpBar {
+    height: 100%;
+    background-color: #2ecc71;
+    transition: width 0.2s ease;
+}
+
+.startWaveButton {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.startWaveButton:hover {
+    background-color: #45a049;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.monsterCount {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.gameOver {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 타워 미리보기 */
+.towerPreview {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    animation: previewPulse 1.5s infinite alternate;
+}
+
+@keyframes previewPulse {
+    from {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* 사정거리 표시 스타일 수정 */
+.inRange::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 0, 0.2);
+    border-radius: 8px;
+    pointer-events: none;
+    animation: rangeGlow 1.5s infinite alternate;
+}
+
+/* 설치 가능한 타일 스타일 강화 */
+.placeable {
+    background-color: rgba(144, 238, 144, 0.3) !important;
+    animation: placeableGlow 1.5s infinite alternate;
+    cursor: pointer;
+}
+
+.placeable:hover {
+    background-color: rgba(144, 238, 144, 0.5) !important;
+    transform: scale(1.05);
+} 

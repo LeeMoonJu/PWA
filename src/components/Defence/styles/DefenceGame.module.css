@@ -1,0 +1,54 @@
+.gameContainer {
+    position: relative;
+    padding: 20px;
+}
+
+.gameOverOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.gameOverContent {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.gameOverContent h2 {
+    color: #ff4444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.gameOverContent p {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.restartButton {
+    margin-top: 20px !important;
+    font-size: 1.1em !important;
+    padding: 10px 30px !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 

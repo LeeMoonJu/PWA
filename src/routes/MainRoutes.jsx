@@ -6,6 +6,7 @@ import Loadable from 'ui-component/Loadable';
 import MusicPlayer from 'views/utilities/MusicPlayer';
 import PatternGame from 'components/PatternGame';
 import RPGGame from 'components/RPG/RPGGame';
+import DefenceGame from 'components/Defence/DefenceGame';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -34,6 +35,19 @@ const MainRoutes = {
                 {
                     path: 'default',
                     element: <DashboardDefault />
+                }
+            ]
+        },
+        {
+            path: 'game',
+            children: [
+                {
+                    path: 'defence',
+                    element: <DefenceGame />
+                },
+                {
+                    path: 'rpg',
+                    element: <RPGGame />
                 }
             ]
         },
