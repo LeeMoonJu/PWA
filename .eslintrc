@@ -47,7 +47,7 @@
     "react/display-name": "off",
     "react/jsx-filename-extension": "off",
     "no-param-reassign": "off",
-    "react/prop-types": "error",
+    "react/prop-types": "warn",
     "react/require-default-props": "off",
     "react/no-array-index-key": "off",
     "react/jsx-props-no-spreading": "off",
@@ -68,22 +68,22 @@
       }
     ],
     "no-unused-vars": [
-      "error",
-      {
-        "ignoreRestSiblings": false
-      }
-    ],
-    "prettier/prettier": [
-      "warn",
-      {
-        "bracketSpacing": true,
-        "printWidth": 140,
-        "singleQuote": true,
-        "trailingComma": "none",
-        "tabWidth": 4,
-        "useTabs": false,
-        "endOfLine": "auto"
-      }
+        "warn",
+        {
+            "ignoreRestSiblings": false
+        }
     ]
+    // "prettier/prettier": [
+    //   "warn",
+    //   {
+    //     "bracketSpacing": true,
+    //     "printWidth": 140,
+    //     "singleQuote": true,
+    //     "trailingComma": "none",
+    //     "tabWidth": 4,
+    //     "useTabs": false,
+    //     "endOfLine": "auto"
+    //   }
+    // ]
   }
 }

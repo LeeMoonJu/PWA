@@ -9,6 +9,8 @@ import BattleScreen from './components/BattleScreen';
 import InventoryPanel from './components/InventoryPanel';
 import Notifications from './components/Notifications';
 import ShopPanel from './components/ShopPanel';
+import GameMap from './components/GameMap';
+import TownPanel from './components/TownPanel';
 
 // hooks import
 import { usePlayer } from './hooks/usePlayer';
@@ -22,8 +24,21 @@ import { itemDatabase } from './data/items';
 const RPGGame = () => {
     const [showInventory, setShowInventory] = useState(false);
     const [showShop, setShowShop] = useState(false);
+    const [showTown, setShowTown] = useState(false);
     const { player, setPlayer, gainExp, equipItem, unequipItem, createItem } = usePlayer();
     const { notifications, addNotification } = useNotifications();
+    const [gameState, setGameState] = useState('exploring'); // 'exploring' | 'battle'
+    const [mapData, setMapData] = useState([
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 2, 0, 0, 2, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 2, 0, 0, 0, 2, 0, 0, 2, 1],
+        [1, 0, 1, 0, 3, 0, 0, 1, 0, 1],
+        [1, 2, 0, 2, 0, 0, 2, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 2, 1],
+        [1, 0, 2, 0, 0, 2, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ]);
 
     useEffect(() => {
         const prevLevel = player.level - 1;
@@ -57,6 +72,17 @@ const RPGGame = () => {
                 addNotification(`${monster.name}에게서 ${newItem.name}을(를) 획득했습니다!`, 'success');
             }
         });
+
+        setTimeout(() => {
+            setGameState('exploring');
+            
+            const currentPos = player.position;
+            setMapData(prev => {
+                const newMapData = [...prev];
+                newMapData[currentPos.y][currentPos.x] = 0;
+                return newMapData;
+            });
+        }, 1500);
     };
 
     const { monster, attack, getBattleMessage } = useBattle(handleMonsterDefeat);
@@ -65,15 +91,6 @@ const RPGGame = () => {
         attack(player.attack, player.hp, (newHp) => {
             setPlayer(prev => ({ ...prev, hp: newHp }));
         });
-    };
-
-    const handleHeal = () => {
-        const healAmount = 30;
-        setPlayer(prev => ({
-            ...prev,
-            hp: Math.min(prev.maxHp, prev.hp + healAmount)
-        }));
-        addNotification(`${healAmount}만큼 회복했습니다!`, 'info');
     };
 
     const handleBuyItem = (item) => {
@@ -98,73 +115,90 @@ const RPGGame = () => {
         addNotification(`${item.name}을(를) ${sellPrice} 골드에 판매했습니다!`, 'success');
     };
 
+    const handleEncounter = () => {
+        setGameState('battle');
+        // 몬스터 생성 로직
+    };
+
+    const handleTownHeal = () => {
+        const healCost = Math.floor((player.maxHp - player.hp) * 0.5);
+        if (player.gold >= healCost) {
+            setPlayer(prev => ({
+                ...prev,
+                hp: prev.maxHp,
+                gold: prev.gold - healCost
+            }));
+            addNotification(`${healCost} 골드를 지불하고 완전히 회복했습니다!`, 'success');
+        }
+    };
+
+    const handleSaveGame = () => {
+        const saveData = {
+            player,
+            mapData,
+            // 필요한 다른 게임 상태들
+        };
+        localStorage.setItem('rpgGameSave', JSON.stringify(saveData));
+        addNotification('게임이 저장되었습니다!', 'success');
+    };
+
     return (
         <Paper elevation={3} sx={{ p: 3, borderRadius: 2, position: 'relative' }}>
             <Typography variant="h4" sx={{ mb: 3 }}>RPG Game</Typography>
             
             <Grid container spacing={3}>
-                {/* 왼쪽 상태창 */}
+                {/* 상태창 */}
                 <Grid item xs={12} md={4}>
                     <StatusPanel player={player} monster={monster} />
                 </Grid>
 
-                {/* 오른쪽 게임 화면 */}
+                {/* 게임 화면 */}
                 <Grid item xs={12} md={8}>
-                    <BattleScreen 
-                        player={player}
-                        monster={monster}
-                        battleMessage={getBattleMessage(player.hp)}
-                    />
-
-                    {/* 행동 버튼 */}
-                    <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
-                        <Grid item>
-                            <Button 
-                                variant="contained" 
-                                color="primary" 
-                                onClick={handleAttack}
-                                disabled={player.hp <= 0 || monster.hp <= 0}
-                                size="large"
-                            >
-                                공격
-                            </Button>
+                    {gameState === 'exploring' ? (
+                        <GameMap 
+                            player={player}
+                            setPlayer={setPlayer}
+                            onEncounter={handleEncounter}
+                            mapData={mapData}
+                            setMapData={setMapData}
+                            onTownEnter={() => setShowTown(true)}
+                        />
+                    ) : (
+                        <BattleScreen 
+                            player={player}
+                            monster={monster}
+                            battleMessage={getBattleMessage(player.hp)}
+                        />
+                    )}
+                    
+                    {/* 전투 중에만 버튼들 표시 */}
+                    {gameState === 'battle' && (
+                        <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+                            <Grid item>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    onClick={handleAttack}
+                                    disabled={player.hp <= 0 || monster.hp <= 0}
+                                    size="large"
+                                >
+                                    공격
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Button 
-                                variant="contained" 
-                                color="secondary" 
-                                onClick={handleHeal}
-                                disabled={player.hp <= 0 || player.hp === player.maxHp}
-                                size="large"
-                            >
-                                회복
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                color="info"
-                                onClick={() => setShowInventory(true)}
-                                size="large"
-                                startIcon={<InventoryIcon />}
-                            >
-                                인벤토리
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                color="warning"
-                                onClick={() => setShowShop(true)}
-                                size="large"
-                                startIcon={<ShopIcon />}
-                            >
-                                상점
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    )}
                 </Grid>
             </Grid>
+
+            {/* 인벤토리 버튼 */}
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setShowInventory(true)}
+                sx={{ position: 'absolute', top: 16, right: 16 }}
+            >
+                인벤토리
+            </Button>
 
             {/* 인벤토리 패널 */}
             {showInventory && (
@@ -173,6 +207,17 @@ const RPGGame = () => {
                     onEquip={equipItem}
                     onUnequip={unequipItem}
                     onClose={() => setShowInventory(false)}
+                />
+            )}
+
+            {/* 마을 패널 */}
+            {showTown && (
+                <TownPanel 
+                    player={player}
+                    onHeal={handleTownHeal}
+                    onOpenShop={() => setShowShop(true)}
+                    onSave={handleSaveGame}
+                    onClose={() => setShowTown(false)}
                 />
             )}
 

@@ -1,12 +1,54 @@
 export const itemDatabase = {
     weapons: [
-        { id: 'w1', name: '나무 검', attack: 5, price: 100, rarity: 'common', color: '#A0522D' },
-        { id: 'w2', name: '철 검', attack: 15, price: 300, rarity: 'rare', color: '#4682B4' },
-        { id: 'w3', name: '미스릴 검', attack: 30, price: 1000, rarity: 'epic', color: '#9370DB' }
+        {
+            id: 'w1',
+            name: '낡은 검',
+            type: 'weapon',
+            attack: 5,
+            price: 100,
+            description: '기본적인 검입니다.'
+        },
+        {
+            id: 'w2',
+            name: '강철 검',
+            type: 'weapon',
+            attack: 10,
+            price: 300,
+            description: '튼튼한 강철로 만든 검입니다.'
+        },
+        {
+            id: 'w3',
+            name: '미스릴 검',
+            type: 'weapon',
+            attack: 20,
+            price: 1000,
+            description: '희귀한 미스릴로 만든 검입니다.'
+        }
     ],
     armors: [
-        { id: 'a1', name: '천 갑옷', defense: 5, maxHp: 20, price: 100, rarity: 'common', color: '#8B4513' },
-        { id: 'a2', name: '가죽 갑옷', defense: 10, maxHp: 40, price: 300, rarity: 'rare', color: '#20B2AA' },
-        { id: 'a3', name: '철 갑옷', defense: 20, maxHp: 80, price: 1000, rarity: 'epic', color: '#483D8B' }
+        {
+            id: 'a1',
+            name: '가죽 갑옷',
+            type: 'armor',
+            defense: 5,
+            price: 150,
+            description: '기본적인 가죽 갑옷입니다.'
+        },
+        {
+            id: 'a2',
+            name: '강철 갑옷',
+            type: 'armor',
+            defense: 10,
+            price: 400,
+            description: '튼튼한 강철 갑옷입니다.'
+        },
+        {
+            id: 'a3',
+            name: '미스릴 갑옷',
+            type: 'armor',
+            defense: 20,
+            price: 1200,
+            description: '희귀한 미스릴로 만든 갑옷입니다.'
+        }
     ]
 }; 

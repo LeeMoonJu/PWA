@@ -1,94 +1,105 @@
-import { Box, Typography, Grid, Button } from '@mui/material';
-import PropTypes from 'prop-types';
-import ItemButton from './ItemButton';
+import { Dialog, DialogTitle, DialogContent, Grid, Button, Typography, Box } from '@mui/material';
+import EquipmentIcon from '@mui/icons-material/Security';
+import UnequipIcon from '@mui/icons-material/NoEncryption';
 
 const InventoryPanel = ({ player, onEquip, onUnequip, onClose }) => {
-    return (
-        <Box sx={{ 
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '80%',
-            maxWidth: 600,
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
-            zIndex: 1000
-        }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>인벤토리</Typography>
+    const renderEquippedItems = () => (
+        <Box sx={{ mb: 3, p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>착용 중인 장비</Typography>
             <Grid container spacing={2}>
-                {/* 장착 중인 장비 */}
-                <Grid item xs={12}>
-                    <Box sx={{ p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
-                        <Typography variant="subtitle1">장착 장비</Typography>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                <ItemButton
-                                    item={player.equipment.weapon || { 
-                                        name: '(없음)', 
-                                        rarity: 'common',
-                                        color: '#666666'
-                                    }}
-                                    onClick={() => onUnequip('weapon')}
-                                    disabled={!player.equipment.weapon}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <ItemButton
-                                    item={player.equipment.armor || { 
-                                        name: '(없음)', 
-                                        rarity: 'common',
-                                        color: '#666666'
-                                    }}
-                                    onClick={() => onUnequip('armor')}
-                                    disabled={!player.equipment.armor}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Box>
+                <Grid item xs={6}>
+                    <Typography variant="subtitle2">무기</Typography>
+                    {player.equipment.weapon ? (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography>{player.equipment.weapon.name}</Typography>
+                            <Button
+                                size="small"
+                                startIcon={<UnequipIcon />}
+                                onClick={() => onUnequip('weapon')}
+                                color="secondary"
+                            >
+                                해제
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Typography color="textSecondary">없음</Typography>
+                    )}
                 </Grid>
-
-                {/* 보유 아이템 목록 */}
-                <Grid item xs={12}>
-                    <Box sx={{ p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
-                        <Typography variant="subtitle1">보유 아이템</Typography>
-                        <Grid container spacing={1}>
-                            {player.inventory.map((item) => (
-                                <Grid item xs={12} sm={6} key={item.instanceId}>
-                                    <ItemButton 
-                                        item={item} 
-                                        onClick={() => onEquip(item)}
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Box>
+                <Grid item xs={6}>
+                    <Typography variant="subtitle2">방어구</Typography>
+                    {player.equipment.armor ? (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography>{player.equipment.armor.name}</Typography>
+                            <Button
+                                size="small"
+                                startIcon={<UnequipIcon />}
+                                onClick={() => onUnequip('armor')}
+                                color="secondary"
+                            >
+                                해제
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Typography color="textSecondary">없음</Typography>
+                    )}
                 </Grid>
             </Grid>
-            <Button 
-                variant="contained" 
-                onClick={onClose}
-                sx={{ mt: 2 }}
-            >
-                닫기
-            </Button>
         </Box>
     );
-};
 
-InventoryPanel.propTypes = {
-    player: PropTypes.shape({
-        equipment: PropTypes.shape({
-            weapon: PropTypes.object,
-            armor: PropTypes.object
-        }).isRequired,
-        inventory: PropTypes.arrayOf(PropTypes.object).isRequired
-    }).isRequired,
-    onEquip: PropTypes.func.isRequired,
-    onUnequip: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
+    const renderInventoryItems = () => (
+        <Grid container spacing={2}>
+            {player.inventory.map((item) => (
+                <Grid item xs={12} key={item.instanceId}>
+                    <Box 
+                        sx={{ 
+                            p: 2, 
+                            border: '1px solid #ccc', 
+                            borderRadius: 1,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Box>
+                            <Typography>{item.name}</Typography>
+                            <Typography variant="caption" color="textSecondary">
+                                {item.type === 'weapon' 
+                                    ? `공격력 +${item.attack}` 
+                                    : `방어력 +${item.defense}`}
+                            </Typography>
+                        </Box>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            startIcon={<EquipmentIcon />}
+                            onClick={() => onEquip(item)}
+                            disabled={
+                                (item.type === 'weapon' && player.equipment.weapon?.instanceId === item.instanceId) ||
+                                (item.type === 'armor' && player.equipment.armor?.instanceId === item.instanceId)
+                            }
+                        >
+                            착용
+                        </Button>
+                    </Box>
+                </Grid>
+            ))}
+        </Grid>
+    );
+
+    return (
+        <Dialog open onClose={onClose} maxWidth="sm" fullWidth>
+            <DialogTitle>인벤토리</DialogTitle>
+            <DialogContent>
+                {renderEquippedItems()}
+                <Typography variant="h6" sx={{ mb: 2 }}>보유 아이템</Typography>
+                {player.inventory.length > 0 
+                    ? renderInventoryItems()
+                    : <Typography color="textSecondary">보유 중인 아이템이 없습니다.</Typography>
+                }
+            </DialogContent>
+        </Dialog>
+    );
 };
 
 export default InventoryPanel; 
