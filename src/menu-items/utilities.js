@@ -28,14 +28,6 @@ const utilities = {
             breadcrumbs: false
         },
         {
-            id: 'patternGame',
-            title: 'Pattern Game',
-            type: 'item',
-            url: '/pages/patternGame',
-            icon: icons.IconGridPattern,
-            breadcrumbs: false
-        },
-        {
             id: 'util-typography',
             title: 'Typography',
             type: 'item',

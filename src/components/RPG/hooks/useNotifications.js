@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import uuid4 from 'uuid4';
 
 export const useNotifications = () => {
     const [notifications, setNotifications] = useState([]);
 
     const addNotification = (message, type = 'success') => {
-        const id = uuidv4();
+        const id = uuid4();
         setNotifications(prev => [...prev, { id, message, type }]);
         
         setTimeout(() => {
@@ -17,4 +17,4 @@ export const useNotifications = () => {
         notifications,
         addNotification
     };
-}; 
+};

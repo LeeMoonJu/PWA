@@ -4,9 +4,10 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import MusicPlayer from 'views/utilities/MusicPlayer';
-import PatternGame from 'components/PatternGame';
+import PatternGame from 'components/Pattern/PatternGame';
 import RPGGame from 'components/RPG/RPGGame';
 import DefenceGame from 'components/Defence/DefenceGame';
+import DataTable from 'components/Tables/DataTable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -48,9 +49,23 @@ const MainRoutes = {
                 {
                     path: 'rpg',
                     element: <RPGGame />
+                },
+                {
+                    path: 'pattern',
+                    element: <PatternGame />
                 }
             ]
         },
+        {
+            path: 'table',
+            children: [
+                {
+                    path: 'data-table',
+                    element: <DataTable />
+                }
+            ]
+        },
+
         {
             path: 'moonju',
             children: [

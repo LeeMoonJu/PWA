@@ -1,5 +1,5 @@
 // assets
-import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp, IconActivity, IconGoGame } from '@tabler/icons-react';
+import { IconArrowLeft, IconArrowRight, IconArrowDown, IconArrowUp, IconActivity, IconGoGame, IconTable } from '@tabler/icons-react';
 
 // constant
 const icons = {
@@ -8,7 +8,8 @@ const icons = {
     IconArrowUp,
     IconArrowLeft,
     IconArrowRight,
-    IconGoGame
+    IconGoGame,
+    IconTable
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -36,55 +37,28 @@ const pages = {
                     title: 'RPG Game',
                     type: 'item',
                     url: '/game/rpg'
+                },
+                {
+                    id: 'PatternGame',
+                    title: 'Pattern Game',
+                    type: 'item',
+                    url: '/game/pattern'
                 }
             ]
         },
         {
-            id: 'moonju',
-            title: 'Moonju',
+            id: 'table',
+            title: 'Table',
             type: 'collapse',
-            icon: icons.IconActivity,
+            icon: icons.IconTable,
             children: [
                 {
-                    id: 'login',
-                    title: 'Login',
+                    id: 'dataTable',
+                    title: 'Data Table',
                     type: 'item',
-                    url: '/'
-                },
-                {
-                    id: 'register',
-                    title: 'Register',
-                    type: 'item',
-                    url: '/register'
-                },
-                {
-                    id: 'musicPlayer',
-                    title: 'Music Player',
-                    type: 'item',
-                    url: '/moonju/music-player'
+                    url: '/table/data-table'
                 }
             ]
-        },
-        {
-            id: 'wonjae',
-            title: 'Wonjae',
-            type: 'collapse',
-            icon: icons.IconArrowUp,
-            children: [{}]
-        },
-        {
-            id: 'donggun',
-            title: 'Donggun',
-            type: 'collapse',
-            icon: icons.IconArrowLeft,
-            children: [{}]
-        },
-        {
-            id: 'gyurim',
-            title: 'Gyurim',
-            type: 'collapse',
-            icon: icons.IconArrowRight,
-            children: [{}]
         }
     ]
 };
